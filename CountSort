@@ -1,0 +1,59 @@
+package Sorting;
+
+import java.util.Arrays;
+
+public class CountingSort {
+
+	public static void main(String[] args) {
+		int arr[] = {7,6,6,3,3,3,2,4,1};
+		CountSort(arr);
+		for(int i=0;i<arr.length;i++) {
+			System.out.print(arr[i]+" ");
+		}
+
+	}
+
+	private static void CountSort(int[] arr) {
+		
+		int n = arr.length;
+		//output array
+		int output[] = new int[n];
+		
+		//first step is to make a temp array.Size of the temp array = max value of arr + 1;
+		int max_value = Integer.MIN_VALUE;
+		for(int i=0;i<arr.length;i++) {
+			if(arr[i] > max_value) {
+				max_value = arr[i];
+			}
+		}
+		
+		int temp[]=new int[max_value + 1];
+		
+		Arrays.fill(temp, 0);
+		//storing frequency of each element
+        for(int i=0;i<n;i++) {
+        	++temp[arr[i]];
+        }
+        
+        //storing Cummulative frequency
+        for(int i=1;i<temp.length;i++) {
+        	temp[i] += temp[i-1];  
+        }
+        //find the sorted array
+        for(int i=n-1;i>=0;i--) {
+        	//storing value in output array
+        	output[temp[arr[i]]-1] = arr[i];
+        	//decreasing the frequency
+        	--temp[arr[i]];
+        	
+        }
+        //copying values from the output array and put it into original array because return type is void
+        for(int i=0;i<n;i++) {
+        	arr[i]=output[i];
+        }
+        
+       
+        
+	}
+
+}
